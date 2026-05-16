@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { queryClient } from './lib/queryClient'
 
 const REQUIRED_ENV_VARS = ['VITE_API_URL'] as const
 
@@ -14,5 +16,7 @@ for (const key of REQUIRED_ENV_VARS) {
 }
 
 const app = createApp(App)
+
+app.use(VueQueryPlugin, { queryClient })
 
 app.mount('#app')

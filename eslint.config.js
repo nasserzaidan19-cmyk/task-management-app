@@ -38,7 +38,6 @@ export default [
     },
     rules: {
       'vue/multi-word-component-names': 'off',
-      'no-unused-vars': 'on',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
