@@ -36,7 +36,6 @@ const breadcrumbs = computed(() => {
     to: r.path.includes(':id') ? route.path : r.path,
   }))
 })
-console.log(breadcrumbs.value)
 </script>
 <template>
   <header
