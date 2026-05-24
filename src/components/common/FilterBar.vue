@@ -52,7 +52,7 @@ function clear() {
       <Search
         class="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
       />
-      <Input v-model="raw" :placeholder="placeholder" class="pl-8 pr-8 h-9" @input="onInput" />
+      <Input :model-value="raw" @input="onInput" :placeholder="placeholder" class="pl-8 pr-8 h-9" />
       <Button
         v-if="raw"
         variant="ghost"
