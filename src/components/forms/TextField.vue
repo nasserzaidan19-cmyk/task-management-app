@@ -15,7 +15,7 @@ defineProps<{
 <template>
   <component :is="form.Field" :name="name">
     <template #default="{ field }">
-      <div class="field">
+      <div class="flex flex-col gap-2">
         <Label :for="name">{{ label }}</Label>
         <p v-if="description" class="text-xs text-muted-foreground">
           {{ description }}
@@ -31,7 +31,10 @@ defineProps<{
           @blur="field.handleBlur"
           @input="(e: Event) => field.handleChange((e.target as HTMLInputElement).value)"
         />
-        <span v-if="field.state.meta.errors.length" class="field-error">
+        <span
+          v-if="field.state.meta.errors.length && field.state.meta.isTouched"
+          class="text-sm text-destructive"
+        >
           {{ field.state.meta.errors[0]?.message ?? field.state.meta.errors[0] }}
         </span>
       </div>
