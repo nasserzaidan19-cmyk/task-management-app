@@ -1,37 +1,39 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { useForm } from '@tanstack/vue-form'
-import { useQueryClient } from '@tanstack/vue-query'
-import { LoginSchema } from '@/schemas/auth'
-import { ref } from 'vue'
-import { authClient } from '@/lib/auth-client'
-import TextField from '@/components/forms/TextField.vue'
 import PasswordField from '@/components/forms/PasswordField.vue'
-import { Button } from '@/components/ui/button'
+import TextField from '@/components/forms/TextField.vue'
+import { useForm } from '@tanstack/vue-form'
+import { RegisterSchema } from '@/schemas/auth'
+import Button from '@/components/ui/button/Button.vue'
 import { Loader2 } from 'lucide-vue-next'
+import { useRoute, useRouter } from 'vue-router'
+import { authClient } from '@/lib/auth-client'
+import { ref } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
-const queryClient = useQueryClient()
 const submitError = ref<string | null>()
 const form = useForm({
   defaultValues: {
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   },
-  validators: { onBlur: LoginSchema },
+  validators: {
+    onBlur: RegisterSchema,
+  },
   onSubmit: async ({ value }) => {
     submitError.value = null
-    const { error } = await authClient.signIn.email({
+    const { error } = await authClient.signUp.email({
       email: value.email,
       password: value.password,
+      name: value.name,
     })
     if (error) {
       submitError.value = error.message ?? 'Invalid credentials'
+      console.log(error)
       return
     }
-    await queryClient.invalidateQueries()
-    // will add a toast
     const redirect = (route.query.redirect as string) || '/dashboard'
     router.push(redirect)
   },
@@ -46,21 +48,15 @@ const form = useForm({
       {{ submitError }}
     </div>
     <form class="space-y-4" @submit.prevent.stop="form.handleSubmit()">
+      <TextField :form="form" name="name" label="User Name" type="text" autocomplete="user-name" />
       <TextField :form="form" name="email" label="Email" type="email" autocomplete="email" />
+      <PasswordField :form="form" name="password" label="Password" autocomplete="password" />
       <PasswordField
         :form="form"
-        name="password"
-        label="Password"
-        autocomplete="current-password"
+        name="confirmPassword"
+        label="Confirm Password"
+        autocomplete="confirm-password"
       />
-      <div class="flex justify-end">
-        <router-link
-          to="/auth/forgot-password"
-          class="text-xs font-medium text-primary hover:underline"
-        >
-          Forgot password?
-        </router-link>
-      </div>
       <form.Subscribe>
         <template #default="{ canSubmit, isSubmitting }">
           <Button type="submit" class="w-full" :disabled="!canSubmit || isSubmitting">
@@ -69,11 +65,10 @@ const form = useForm({
           </Button>
         </template>
       </form.Subscribe>
-
       <p class="text-center text-sm text-muted-foreground">
-        Don't have an account?
-        <router-link to="/auth/signup" class="font-medium text-primary hover:underline">
-          Sign up
+        Already have an account?
+        <router-link to="/auth/login" class="font-medium text-primary hover:underline">
+          Log in
         </router-link>
       </p>
     </form>

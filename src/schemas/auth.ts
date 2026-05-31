@@ -13,7 +13,7 @@ export const LoginSchema = z.object({
 })
 
 export const RegisterSchema = LoginSchema.extend({
-  name: z.string().min(1, 'Name is required').max(255, 'Name must be at most 255 characters long'),
+  name: z.string().min(1, 'Name is required').max(100, 'Name must be at most 100 characters long'),
 
   confirmPassword: z
     .string()

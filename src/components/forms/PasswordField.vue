@@ -36,7 +36,10 @@ const visible = ref(false)
             @input="(e: Event) => field.handleChange((e.target as HTMLInputElement).value)"
           />
         </div>
-        <p v-if="field.state.meta.errors.length" class="text-sm text-destructive">
+        <p
+          v-if="field.state.meta.errors.length && field.state.meta.isTouched"
+          class="text-sm text-destructive"
+        >
           {{ field.state.meta.errors[0]?.message ?? field.state.meta.errors[0] }}
         </p>
       </div>

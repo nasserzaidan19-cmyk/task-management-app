@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SignupForm from '@/components/features/auth/SignupForm.vue'
+</script>
 <template>
-  <div>signup view</div>
+  <SignupForm />
 </template>
