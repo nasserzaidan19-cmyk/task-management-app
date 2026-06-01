@@ -21,4 +21,9 @@ app.use(router)
 
 app.use(VueQueryPlugin, { queryClient })
 
+window.addEventListener('auth:expired', () => {
+  // will add toast in the future
+  console.log('session expired, redirecting to login')
+  router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } })
+})
 app.mount('#app')
