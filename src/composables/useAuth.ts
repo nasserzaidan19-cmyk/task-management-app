@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { signIn, useSession, signOut } from '@/lib/auth-client'
+import { signIn, useSession, signOut, requestPasswordReset } from '@/lib/auth-client'
 
 export function useAuth() {
   const sessionState = useSession()
@@ -19,5 +19,6 @@ export function useAuth() {
     isPending,
     signIn,
     signOut,
+    requestPasswordReset,
   }
 }
