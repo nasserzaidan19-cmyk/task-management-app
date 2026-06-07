@@ -4,11 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 </script>
 
 <template>
-  <!-- Main layout background wrapper synced with the sidebar design tokens -->
   <div
     class="flex min-h-screen w-screen items-center justify-center bg-sidebar px-4 py-12 text-sidebar-foreground transition-colors duration-300 sm:px-6 lg:px-8"
   >
-    <!-- Official Shadcn Card Component Layer -->
     <Card
       class="w-full max-w-md border-sidebar-border bg-sidebar text-sidebar-foreground shadow-md dark:bg-slate-900/50 backdrop-blur-sm"
     >
