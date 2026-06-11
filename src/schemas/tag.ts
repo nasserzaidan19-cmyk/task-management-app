@@ -12,7 +12,15 @@ export const TagSchema = z.object({
 
 export const CreateTagSchema = TagSchema.omit({ id: true })
 
-export const UpdateTagSchema = TagSchema.partial().omit({ id: true })
+export const UpdateTagSchema = z.object({
+  id: z.string().uuid().readonly(),
+  name: z
+    .string()
+    .min(1, 'Name is required')
+    .max(255, 'Name must be at most 255 characters long')
+    .optional(),
+  color: hexColorSchema.optional(),
+})
 
 //RELATIONSHIP tag SCHEMAS
 export const addTagToProjectSchema = z.object({

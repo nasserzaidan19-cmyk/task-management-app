@@ -12,6 +12,8 @@ export function useAuth() {
 
   const isPending = computed(() => sessionState.value?.isPending ?? false)
 
+  const error = computed(() => sessionState.value?.error)
+
   return {
     user,
     session,
@@ -20,5 +22,6 @@ export function useAuth() {
     signIn,
     signOut,
     requestPasswordReset,
+    error,
   }
 }
