@@ -9,7 +9,6 @@ import TextField from '@/components/forms/TextField.vue'
 import PasswordField from '@/components/forms/PasswordField.vue'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-vue-next'
-import { useDeleteTag, useTagsQuery } from '@/composables/queries/useTags'
 
 const router = useRouter()
 const route = useRoute()
@@ -37,10 +36,6 @@ const form = useForm({
     router.push(redirect)
   },
 })
-
-const test = useTagsQuery()
-const deleteTag = useDeleteTag()
-deleteTag.mutate('36ff626a-a12e-4c2f-90eb-8f3d33487d10')
 </script>
 <template>
   <div class="space-y-4">

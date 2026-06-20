@@ -36,8 +36,9 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <RouterView />
   <ConfirmDialog />
-  <RouterView></RouterView>
+
   <VueQueryDevtools v-if="isDev" :initial-is-open="false" position="bottom" />
 </template>
 <!-- -->

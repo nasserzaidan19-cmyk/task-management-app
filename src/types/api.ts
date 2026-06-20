@@ -1,5 +1,5 @@
 export interface Paginated<T> {
-  items: T[]
+  data: T[]
   pagination: {
     page: number
     limit: number

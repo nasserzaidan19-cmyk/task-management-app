@@ -11,6 +11,13 @@ export const TagSchema = z.object({
 })
 
 export const CreateTagSchema = TagSchema.omit({ id: true })
+export const UpdateTagInputSchema = z.object({
+  updatedTagName: z
+    .string()
+    .min(1, 'Name is required')
+    .max(30, 'Name must be at most 255 characters long'),
+  updatedTagColor: hexColorSchema,
+})
 
 export const UpdateTagSchema = z.object({
   id: z.string().uuid().readonly(),

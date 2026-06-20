@@ -1,43 +1,38 @@
 <script setup lang="ts">
 import { useConfirmDialog } from '@/composables/useConfirm'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 const { state, handleConfirm, handleCancel } = useConfirmDialog()
 </script>
 
 <template>
-  <AlertDialog :open="state.open" @update:open="(v) => !v && handleCancel()">
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>{{ state.title }}</AlertDialogTitle>
-        <AlertDialogDescription v-if="state.description">
+  <Dialog :open="state.open" @update:open="(v) => !v && handleCancel()">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{{ state.title }}</DialogTitle>
+        <DialogDescription v-if="state.description">
           {{ state.description }}
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel @click="handleCancel">
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="outline" @click="handleCancel">
           {{ state.cancelText ?? 'Cancel' }}
-        </AlertDialogCancel>
-        <AlertDialogAction
-          :class="
-            cn(state.variant === 'destructive' ? buttonVariants({ variant: 'destructive' }) : '')
-          "
+        </Button>
+        <Button
+          :variant="state.variant === 'destructive' ? 'destructive' : 'default'"
           @click="handleConfirm"
         >
           {{ state.confirmText ?? 'Confirm' }}
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>

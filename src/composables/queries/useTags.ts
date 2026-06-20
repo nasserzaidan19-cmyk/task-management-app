@@ -3,6 +3,7 @@ import { tagsApi } from '@/api/tags'
 import { queryKeys } from '@/lib/queryKey'
 import { useAuth } from '../useAuth'
 import type { Tag, CreateTagInput, UpdateTagInput } from '@/schemas/tag'
+import type { Paginated } from '@/types/api'
 
 const { tagsKeys } = queryKeys
 
@@ -25,12 +26,12 @@ export function useCreateTag() {
     },
     onMutate: async (newTag) => {
       await queryClient.cancelQueries({ queryKey: [tagsKeys.all] })
-      const previousTags = queryClient.getQueryData<Tag[]>([tagsKeys.all])
+      const previousTags = queryClient.getQueryData<Paginated<Tag>>([tagsKeys.all])
       if (previousTags) {
         queryClient.setQueryData<Tag[]>(
           [tagsKeys.all],
           [
-            ...previousTags,
+            ...previousTags.data,
             {
               ...newTag,
               id: 'temp-id-' + Date.now(), // temporary client-side unique id
@@ -58,7 +59,7 @@ export function useUpdateTag() {
   const queryClient = useQueryClient()
   const { isAuthenticated } = useAuth()
   return useMutation({
-    mutationFn: (updatedTag: UpdateTagInput) => {
+    mutationFn: async (updatedTag: UpdateTagInput) => {
       if (!isAuthenticated.value) throw new Error('Unauthorized action')
       return tagsApi.update(updatedTag)
     },
@@ -81,7 +82,7 @@ export function useUpdateTag() {
       //we will add toast
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: tagsKeys.all })
+      queryClient.invalidateQueries({ queryKey: [tagsKeys.all] })
     },
   })
 }
@@ -113,7 +114,7 @@ export function useDeleteTag() {
       //we will add toast
     },
     onSettled: () => {
-      queryClint.invalidateQueries({ queryKey: tagsKeys.all })
+      queryClint.invalidateQueries({ queryKey: [tagsKeys.all] })
     },
   })
 }

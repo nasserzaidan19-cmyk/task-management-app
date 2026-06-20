@@ -1,9 +1,10 @@
+import type { Paginated } from '@/types/api'
 import { apiFetch } from './client'
 import type { Tag, CreateTagInput, UpdateTagInput } from '@/schemas/tag'
 
 export const tagsApi = {
-  async list(): Promise<Tag[]> {
-    return apiFetch('/tags')
+  async list(): Promise<Paginated<Tag>> {
+    return apiFetch<Paginated<Tag>>('/tags')
   },
   async create(input: CreateTagInput): Promise<Tag> {
     return apiFetch('/tags', {
